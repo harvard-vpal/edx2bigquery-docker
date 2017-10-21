@@ -8,7 +8,7 @@ RUN pip install ./edxcut
 RUN pip install pandas
 
 # download edx2bigquery from github
-RUN git clone https://github.com/mitodl/edx2bigquery.git
+RUN git clone -b dev https://github.com/kunanit/edx2bigquery.git
 
 # install edx2bigquery
 WORKDIR /edx2bigquery
