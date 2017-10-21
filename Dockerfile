@@ -4,9 +4,16 @@ FROM google/cloud-sdk
 RUN git clone https://github.com/mitodl/edxcut.git
 RUN pip install ./edxcut
 
-# install edx2bigquery
+# install pandas
+RUN pip install pandas
+
+# download edx2bigquery from github
 RUN git clone https://github.com/mitodl/edx2bigquery.git
+
+# install edx2bigquery
 WORKDIR /edx2bigquery
 RUN python setup.py develop
 
-WORKDIR /
+# set default working directory
+RUN mkdir /edx_data
+WORKDIR /edx_data
