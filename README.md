@@ -15,7 +15,7 @@ edx2bigquery is a tool for importing edX SQL and log data into Google BigQuery f
 edx2bigquery has many dependencies, and installing them doesn't always go smoothly depending on the machine settings, python environment, etc. Docker makes this process quicker, and more reproducible.
 
 ### Contents
-The `Dockerfile` in this repo specifies the edx2bigquery image. The [google/cloud-sdk image](https://hub.docker.com/r/google/cloud-sdk/) is used as a base image. Users can build the image from the Dockerfile, or download the pre-built image from DockerHub at [harvardvpal/edx2bigquery](https://hub.docker.com/r/harvardvpal/edx2bigquery).
+The `Dockerfile` in this repo specifies the edx2bigquery image build instructions, which uses [google/cloud-sdk image](https://hub.docker.com/r/google/cloud-sdk/) is used as a base image. Users can build the edx2bigquery image from the provided Dockerfile, or download the pre-built image from DockerHub at [harvardvpal/edx2bigquery](https://hub.docker.com/r/harvardvpal/edx2bigquery). The `edx_data` directory is intended for keeping edx2bigquery settings and data files, that can be used in the container after mounting the folder to the `/edx_data` container directory. (A different host directory mapping can be used, just change the run commands provided in the Getting Started guide accordingly.)
 
 ## Getting Started
 
