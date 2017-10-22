@@ -39,33 +39,30 @@ Build the image from the Dockerfile:
 docker build . -t edx2bigquery
 ```
 
-### Configuration
-
-#### Create Docker container
+#### Create Docker container with data volumes
 We'll need to designate a folder on our computer that will contain files that we want the Docker container to have access to (e.g. credential files, raw data).
 
-Use the following command to mount the `edx_data` folder in the current directory to the `/edx_data` folder in the container, and to create a named container for persisting authentication credentials.
+Use the following command to mount the `edx_data/` folder in the current directory to the `/edx_data` directory in the container, and to create a named container for persisting authentication credentials.
 
 ```
 docker run \
   --mount source="$(pwd)"/edx_data,destination=/edx_data,type=bind \
   --name gcloud-config \
   edx2bigquery
-
 ```
 
+### edx2bigquery Configuration:
+As with a normal edx2bigquery installation, set up the Google Cloud resources and credentials, edX data packages, and update the edx2bigquery configuration file.
 
-#### Set up edx2bigquery resources:
-Set up the Google Cloud resources and credentials, edX data packages, and update the edx2bigquery configuration file.
-
-##### In the [google cloud console](https://console.cloud.google.com):
+#### Google Cloud resources
+In the [google cloud console](https://console.cloud.google.com):
 * Create new Google Cloud project
 * Create service account
-    - Save keyfile in `edx_data`
+    - Save keyfile in mounted folder (i.e. `edx_data/`)
 * Enable youtube API
 * Create new gcloud bucket
 
-##### Set up folder with edX data:
+#### Set up folder with edX data:
 Example folder structure:
 * `edx_data/`
     - `RAW_SQL/` - (contains raw sql data)
@@ -73,9 +70,9 @@ Example folder structure:
     - `SQL/` - (empty, processed data will be placed here)
 
 #### Update edx2bigquery config file
-Update the edx2bigquery config file with the required settings. See the template file `edx2biguqery_config.py.template` for an example.
+In the `edx_data` folder, copy and rename the `edx2bigquery_config.py.template` file to `edx2bigquery_config.py`, and populate the required edx2bigquery settings.
 
-#### Authenticate container with google cloud
+### Authenticate container with google cloud
 Run container with volume mounts configured:
 ```
 docker run -it --volumes-from gcloud-config edx2bigquery
@@ -97,17 +94,8 @@ gcloud config set project edx2bigquery-183418
 gcloud config set account service-account@edx2bigquery-183418.iam.gserviceaccount.com
 ```
 
-
-```
-gcloud auth activate-service-account --key-file edx_data/edx2bigquery-keyfile.json
-
-gcloud config set project edx2bigquery-keyfile
-
-gcloud config set account edx2bigquery@edx2bigquery-keyfile.iam.gserviceaccount.com
-```
-
 Once you authenticate successfully, credentials and project settings are preserved in the volume of
-the gcloud-config container. If you wish, use `ctrl-D` to exit the container.
+the gcloud-config container.
 
 ### Run edx2bigquery
 If you are not already inside the configured container, use:
