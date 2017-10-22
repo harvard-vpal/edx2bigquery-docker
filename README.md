@@ -68,9 +68,10 @@ Example folder structure:
     - `RAW_SQL/` - (contains raw sql data)
     - `LOGS/` - (contains raw log data)
     - `SQL/` - (empty, processed data will be placed here)
+    - `edx2bigquery_config.py` - settings file
 
 #### Update edx2bigquery config file
-In the `edx_data` folder, copy and rename the `edx2bigquery_config.py.template` file to `edx2bigquery_config.py`, and populate the required edx2bigquery settings.
+In the `edx_data/` folder, copy and rename the `edx2bigquery_config.py.template` file to `edx2bigquery_config.py`, and populate the required edx2bigquery settings.
 
 ### Authenticate container with google cloud
 Run container with volume mounts configured:
